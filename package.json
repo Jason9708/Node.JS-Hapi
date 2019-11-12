@@ -1,0 +1,30 @@
+{
+  "name": "hapi-service",
+  "version": "1.0.0",
+  "description": "node server base on Hapi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jason9708/Node.JS-Hapi.git"
+  },
+  "keywords": [
+    "zhijia110708"
+  ],
+  "author": "CHICAGO",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jason9708/Node.JS-Hapi/issues"
+  },
+  "homepage": "https://github.com/Jason9708/Node.JS-Hapi#readme",
+  "dependencies": {
+    "env2": "^2.2.2",
+    "hapi": "^16.7.0",
+    "hapi-swagger": "^7.10.0",
+    "inert": "^4.2.1",
+    "package": "^1.0.1",
+    "vision": "^4.1.1"
+  }
+}
