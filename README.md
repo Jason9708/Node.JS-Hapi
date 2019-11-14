@@ -100,3 +100,47 @@ npm i joi@13
         }).unknown(),
     }
 ```
+
+### 使用Sequelize-cli
+> Sequelize是NodeJs生态中一款知名的基于Promise数据库ORM插件，提供了大量常用数据库增删改查的函数式Api
+
+```
+以MySQL为基础数据库，安装如下依赖
+- npm i sequelize-cli -D
+    提供一些列好用的终端指令
+- npm i sequelize
+- npm i mysql2
+
+cd到node_modules/.bin执行sequelize init
+
+├── config                       # 项目配置目录
+|   ├── config.json              # 数据库连接的配置 （提供开发、测试、生产三个默认样板环境）修改成config.js
+├── models                       # 数据库 model
+|   ├── index.js                 # 数据库连接的样板代码 （用于定义数据库表结构对于关系的模块目录）
+├── migrations                   # 数据迁移的目录 （用于通过管理数据库表结构迁移的目录）
+|       node_modules/.bin/sequelize db:migrate 帮助我们将migrations目录下的迁移行定义，最终完成数据表结构的自动化创建。
+|       node_modules/.bin/sequelize db:migrate:undo 按照down方法中定义的规则，回退一个数据表结构迁移的状态
+|       node_modules/.bin/sequelize db:migrate:undo:all --to xxxxxxxxx-create-shops-table.js 可以恢复到初始状态，也可以通过将其名称传递到--to来恢复到特定的迁移
+├── seeders                      # 数据填充的目录 （用于在数据库完成migrations初始化后，填补一些打底数据的配置目录）
+        node_modules/.bin/sequelize seed:create --name init-shops  这个命令会在seeder目录下创建一个种子文件，它遵循up/down语义
+        node_modules/.bin/sequelize db:seed:all 向数据库填充seeders目录中所有的up方法所定义的数据（注意seeders的执行，不会将状态存储在SequelizeMeta表中）
+        node_modules/.bin/sequelize db:seed --seed xxxxxxxxx-init-shops.js 也可以指定特定seed配置来填充
+        node_modules/.bin/sequelize db:seed:undo:all  撤销所有种子
+        node_modules/.bin/sequelize db:seed:undo --seed XXXXXXXXXXXXXX-demo-user.js 撤销指定种子
+
+
+使用migrate来向shops表添加一列address字段
+node_modules/.bin/sequelize migration:create --name add-columns-to-shops-table      # 创建一个新的迁移文件
+
+添加代码
+module.exports = {
+  up: (queryInterface, Sequelize) => Promise.all([
+    queryInterface.addColumn('shops', 'address', { type: Sequelize.STRING }),
+  ]),
+
+  down: queryInterface => Promise.all([
+    queryInterface.removeColumn('shops', 'address'),
+  ]),
+}
+再执行sequelize db:migrate
+```
